@@ -323,7 +323,20 @@ export default function HomePage() {
             return (
               <button
                 key={`${h.docId}-${h.page}-${idx}`}
-                onClick={() => setSelected({ docId: h.docId, page: h.page })}
+                onClick={() => {
+                  const meta = DOC_LABELS[h.docId];
+                  if (!meta?.file) return;
+
+                  const pdfUrl = `${meta.file}#page=${h.page}`;
+
+                  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+                  if (isMobile) {
+                    window.location.href = pdfUrl; // ✅ 手機：同分頁打開 PDF
+                  } else {
+                    setSelected({ docId: h.docId, page: h.page }); // ✅ 桌機：右側 iframe 不變
+                  }
+                }}
                 style={{
                   textAlign: "left",
                   borderRadius: 16,
