@@ -386,6 +386,22 @@ export default function HomePage() {
                 >
                   {snippet(h.text, q)}
                 </div>
+
+                <div
+                  style={{
+                    marginTop: 10,
+                    fontSize: 12,
+                    fontWeight: 800,
+                    color: "#38BDF8",
+                    letterSpacing: 0.2,
+                    display: "block",
+                  }}
+                >
+                  {/* ✅ 只在手機顯示 */}
+                  <span style={{ display: "inline-block" }} className="mobile-only-hint">
+                    👉 點此查看 PDF
+                  </span>
+                </div>
               </button>
             );
           })}
@@ -415,6 +431,14 @@ export default function HomePage() {
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        @media (min-width: 768px) {
+          .mobile-only-hint {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
