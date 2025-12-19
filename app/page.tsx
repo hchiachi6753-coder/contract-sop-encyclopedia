@@ -325,32 +325,65 @@ export default function HomePage() {
                 key={`${h.docId}-${h.page}-${idx}`}
                 onClick={() => {
                   const meta = DOC_LABELS[h.docId];
-                  if (!meta?.file) return;
-
-                  const pdfUrl = `${meta.file}#page=${h.page}`;
+                  const file =
+                    meta?.file ?? `/pdfs/${encodeURIComponent(h.docId)}.pdf`;
+                  const pdfUrl = `${file}#page=${h.page}`;
 
                   const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
                   if (isMobile) {
-                    window.location.href = pdfUrl; // ✅ 手機：同分頁打開 PDF
+                    // 📱 手機：同分頁開 PDF（用瀏覽器返回換其他結果）
+                    window.location.href = pdfUrl;
                   } else {
-                    setSelected({ docId: h.docId, page: h.page }); // ✅ 桌機：右側 iframe 不變
+                    // 🖥 桌機：右側 iframe 顯示（原行為）
+                    setSelected({ docId: h.docId, page: h.page });
                   }
                 }}
                 style={{
                   textAlign: "left",
-                  borderRadius: 16,
-                  padding: 14,
-                  background: "#0F172A",
+                  width: "100%",
+                  borderRadius: 18,
+                  padding: 16,
+                  marginBottom: 14,
+
+                  /* 🔸 搜尋結果卡片專屬底色（比上方控制卡片更厚重） */
+                  background: "linear-gradient(180deg, #0B1220 0%, #070C16 100%)",
+
+                  /* 🔸 明確邊框，和上方子選項拉開層級 */
                   border: "1px solid #1E293B",
+
+                  /* 🔸 卡片感陰影（上方區塊沒有） */
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.35)",
+
                   color: "#E5E7EB",
                   cursor: "pointer",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 28px rgba(0,0,0,0.45)";
+                  e.currentTarget.style.borderColor = "#38BDF8";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 8px 20px rgba(0,0,0,0.35)";
+                  e.currentTarget.style.borderColor = "#1E293B";
                 }}
               >
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#F8FAFC" }}>
-                  {meta?.name || h.docId} ・第 {h.page} 頁
+                <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>
+                  {DOC_LABELS[h.docId]?.name ?? `SOP ${h.docId}`} ・ 第 {h.page} 頁
                 </div>
-                <div style={{ fontSize: 12, color: "#CBD5E1", lineHeight: 1.5 }}>
+
+                <div
+                  style={{
+                    fontSize: 14,
+                    color: "#CBD5E1",
+                    lineHeight: 1.6,
+                    opacity: 0.95,
+                  }}
+                >
                   {snippet(h.text, q)}
                 </div>
               </button>
