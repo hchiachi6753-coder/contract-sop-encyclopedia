@@ -181,38 +181,21 @@ export default function HomePage() {
     <div style={{ display: "grid", gridTemplateColumns: "420px 1fr", height: "100vh" }}>
       {/* Left panel */}
       <div style={{ borderRight: "1px solid #ddd", padding: 16, overflow: "auto" }}>
-        <h1 style={{ fontSize: 20, fontWeight: 800, marginBottom: 10 }}>合約相關操作百科大全</h1>
+        {/* ✅ 標題置中 */}
+        <h1
+          style={{
+            fontSize: 26,
+            fontWeight: 900,
+            marginBottom: 14,
+            textAlign: "center",
+            letterSpacing: 0.6,
+            color: "#F8FAFC",
+          }}
+        >
+          合約相關操作百科大全
+        </h1>
 
-        <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-          <input
-            value={q}
-            onChange={(e) => doSearch(e.target.value)}
-            placeholder="輸入關鍵字，例如：未曾接聽 / 可再追 / 新約拆分"
-            style={{
-              flex: 1,
-              padding: "12px 14px",
-              borderRadius: 12,
-              border: "1px solid #374151",
-              background: "#111827",
-              color: "#E6EDF3",
-              fontSize: 14,
-              outline: "none",
-            }}
-          />
-          <button
-            onClick={() => doSearch(q)}
-            style={{
-              padding: "10px 12px",
-              border: "1px solid #ccc",
-              borderRadius: 10,
-              background: "white",
-              cursor: "pointer",
-            }}
-          >
-            搜尋
-          </button>
-        </div>
-
+        {/* ✅ 常用任務（大類+子類）保持在上方 */}
         <div style={{ marginBottom: 12 }}>
           <div style={{ fontSize: 12, color: "#666", marginBottom: 8 }}>常用任務（先選類別，再選子項）</div>
 
@@ -292,6 +275,53 @@ export default function HomePage() {
               </div>
             </div>
           )}
+        </div>
+
+        {/* ✅ 搜尋列移到「按鈕」與「結果」之間，縮小成進階搜尋 */}
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            alignItems: "center",
+            marginTop: 14,
+            marginBottom: 14,
+          }}
+        >
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") doSearch(q);
+            }}
+            placeholder="進階搜尋：直接輸入關鍵字（例如：未曾接聽 / 可再追 / 新約拆分）"
+            style={{
+              flex: 1,
+              padding: "10px 12px",
+              borderRadius: 12,
+              border: "1px solid #243244",
+              background: "#0B1220",
+              color: "#E5E7EB",
+              outline: "none",
+              fontSize: 14,
+            }}
+          />
+
+          <button
+            onClick={() => doSearch(q)}
+            style={{
+              padding: "10px 14px",
+              borderRadius: 12,
+              border: "1px solid #334155",
+              background: "#2563EB",
+              color: "#FFFFFF",
+              fontWeight: 900,
+              cursor: "pointer",
+              fontSize: 14,
+              minWidth: 84,
+            }}
+          >
+            搜尋
+          </button>
         </div>
 
         <div
