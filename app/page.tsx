@@ -271,7 +271,7 @@ export default function HomePage() {
               </div>
 
               <div style={{ marginTop: 10, fontSize: 12, color: "#9BA3AF", lineHeight: 1.5 }}>
-                找不到你要的子選項？你也可以直接在上方搜尋框輸入關鍵字。
+                找不到合適的選項？ 直接在下方搜尋框輸入關鍵字。
               </div>
             </div>
           )}
